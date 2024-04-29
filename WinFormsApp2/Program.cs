@@ -9,24 +9,17 @@ namespace WinFormsApp2
         {
             ApplicationConfiguration.Initialize();
             
-            var usersList = Open("userslist.ppp");
-            if(usersList is null)
-            {
-                Application.Exit();
-                return;
-            }
+            //var loginform = new LoginForm(usersList);
 
-            var form = new LoginForm(usersList);
-
-            if (form.ShowDialog() != DialogResult.OK)
-            {
-                Application.Exit();
-            }else
-                Application.Run(new Form1(usersList));
+            //if (loginform.ShowDialog() != DialogResult.OK)
+            //{
+            //    Application.Exit();
+            //}else
+                Application.Run(new Form1());
         }
 
         // загрузка данных из файла
-        internal static Читатель[] Open(string file)
+        internal static int[] Open(string file)
         {
             if (File.Exists(file))
             {
@@ -35,7 +28,7 @@ namespace WinFormsApp2
                     using (FileStream openStream = File.OpenRead(file))
                     {
                         var list =
-                            JsonSerializer.Deserialize<Читатель[]>(openStream);
+                            JsonSerializer.Deserialize<int[]>(openStream);
                         return list;
                     }
                 }
@@ -48,7 +41,8 @@ namespace WinFormsApp2
                     MessageBox.Show(ex.Message);
                 }
             }else
-                MessageBox.Show("Нет файла читателей!");
+                MessageBox.Show("Нет файла!");
+
             return null;
         }
     }
